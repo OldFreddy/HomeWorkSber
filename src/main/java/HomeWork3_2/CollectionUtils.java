@@ -68,18 +68,18 @@ public class CollectionUtils {
     }
 
 
-    public static <T> List<T> range(List<? extends Integer> list, T min, T max) {
+    public static <T extends Comparable<? super T>> List<? super T> range(List<T> list, T min, T max) {
 
 
         Collections.sort(list);
-        List<Integer> newList = new ArrayList<>();
-        for (Integer integer : list) {
-            if (integer >= (Integer) min && integer <= (Integer) max) {
+        List<T> newList = new ArrayList<>();
+        for (T integer : list) {
+            if (integer.compareTo(min) >= 0 && integer.compareTo(max)<=0) {
                 newList.add(integer);
             }
         }
 
-        return (List<T>) newList;
+        return  newList;
 
 
     }
@@ -150,6 +150,13 @@ public class CollectionUtils {
 
         //Реализация range()
         System.out.println("Реализация range()");
+//        List<Number> testList = new ArrayList<>();
+//        testList.add(1);
+//        testList.add(2);
+//        testList.add(3);
+//        testList.add(4);
+//        testList.add(5);
+        //System.out.println(range(testList,2,4));
         System.out.println(range(Arrays.asList(8, 1, 3, 5, 6, 4), 3, 6));
 
 
