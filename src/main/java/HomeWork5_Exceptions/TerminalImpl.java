@@ -3,6 +3,7 @@ package HomeWork5_Exceptions;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLOutput;
 import java.util.List;
 
 public class TerminalImpl implements Terminal {
@@ -10,6 +11,9 @@ public class TerminalImpl implements Terminal {
     List<Account> accounts;
     Account accountNow;
     int accountAction = -1;
+    boolean currentPinCode = false;
+
+    StringBuilder bufferStr = new StringBuilder();
 
 
     @Override
@@ -80,6 +84,9 @@ public class TerminalImpl implements Terminal {
                     case 4:
                         System.exit(0);
                 }
+            } else {
+                System.err.println("Доступ к аккаунту запрещен");
+                break;
             }
         }
     }
@@ -93,54 +100,78 @@ public class TerminalImpl implements Terminal {
                     isAccountSearched = true;
                     System.out.println("\nАккаунт найден! Введите пин-код\n");
                     if (!accountNow.accountAccess) {
-                        checkPinCode(accountNow);
+                        enterPinCode(accountNow);
                     }
                 }
             }
             if (!isAccountSearched) {
                 throw new notExistAccountException();
             }
-        } catch (notExistAccountException e) {
+        } catch (notExistAccountException | InterruptedException e) {
             System.err.println("\nТакого аккаунта не существует\n");
             System.exit(0);
         }
     }
 
-    public void checkPinCode(Account acc) throws IOException {
-        StringBuilder bufferStr = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int numOfIncorrectPasswordEnter = 0;
-        boolean isBlocked = false;
+    public void enterPinCode(Account acc) throws InterruptedException {
+        int numberOfTry = 0;
 
+        checkPinCode(acc);
+
+//        while(true){
+//            checkPinCode(acc);
+//
+//            if (acc.accountAccess){
+//                numberOfTry = 0;
+//                break;
+//            } else{
+//                numberOfTry++;
+//                if (numberOfTry == 3){
+//                    numberOfTry = 0;
+//                    System.out.println("А НУ ДАВАЙ ЕЩЕ!");
+//                }
+//            }
+//        }
+
+
+
+
+    }
+
+    public void checkPinCode(Account acc) {
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         for (int j = 0; j < 4; ) {
             try {
                 String s = reader.readLine();
                 char c = s.charAt(0);
                 if (Character.isDigit(c)) {
                     j++;
-                    //System.out.println("\nВы ввели число\n");
                     bufferStr.append(c);
                     System.out.println(bufferStr);
 
                 } else {
                     throw new NumberFormatException();
                 }
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | IOException e) {
                 System.err.println("\nВведено не число\n");
             }
         }
+
         if (bufferStr.length() == 4) {
             Integer pinCode = Integer.parseInt(bufferStr.toString());
 
             if (pinCode.equals(acc.pinCode)) {
                 System.out.println("\nВведен верный пинкод\n");
                 acc.accountAccess = true;
-                numOfIncorrectPasswordEnter = 0;
+
             } else {
                 System.err.println(" Введен неверный пинкод");
-                numOfIncorrectPasswordEnter++;
                 acc.accountAccess = false;
+
             }
         }
+
     }
+
 }
