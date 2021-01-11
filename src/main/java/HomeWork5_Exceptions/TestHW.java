@@ -19,20 +19,10 @@ public class TestHW {
         accounts.add(acc2);
         accounts.add(acc3);
         newTerminal.accounts = accounts;
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-//        System.out.println("Введите имя аккаунта");
-//        String accountName = reader.readLine();
-//
-//        newTerminal.getAccount(accountName);
-//        System.out.println(newTerminal.countOfMoney(newTerminal.accountNow));
         newTerminal.terminalInterface();
 
 
     }
-
-
 
 
 }

@@ -2,7 +2,7 @@ package HomeWork5_Exceptions;
 
 public interface Terminal {
 
-    int countOfMoney(Account acc);
-    void putTheMoney();
-    void getTheMoney();
+    void countOfMoney(Account acc);
+    void putTheMoney(Account acc, int money);
+    void getTheMoney(Account acc, int money);
 }

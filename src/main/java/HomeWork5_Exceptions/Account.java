@@ -12,12 +12,20 @@ public class Account {
     }
 
     public int getCountOfMoney() {
-        if (accountAccess){
+        if (accountAccess) {
             return countOfMoney;
-        } else{
+        } else {
             return -1;
         }
+    }
 
+    public void putTheMoney(int money) {
+        countOfMoney = countOfMoney + money;
+    }
+
+
+    public void getTheMoney(int money) {
+        countOfMoney -= money;
     }
 
     public Account(String accountName, int countOfMoney, int pinCode) {
