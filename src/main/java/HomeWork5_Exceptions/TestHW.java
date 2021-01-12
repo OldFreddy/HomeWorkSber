@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestHW {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         //создаем аккаунты
         Account acc1 = new Account("acc1", 1000, 1111);
         Account acc2 = new Account("acc2", 500, 2222);

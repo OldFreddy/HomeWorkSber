@@ -3,7 +3,6 @@ package HomeWork5_Exceptions;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLOutput;
 import java.util.List;
 
 public class TerminalImpl implements Terminal {
@@ -12,13 +11,14 @@ public class TerminalImpl implements Terminal {
     Account accountNow;
     int accountAction = -1;
     boolean currentPinCode = false;
+    int countOfWrongPassEnters = 0;
 
     StringBuilder bufferStr = new StringBuilder();
 
 
     @Override
     public void countOfMoney(Account acc) {
-
+        bufferStr.setLength(0);
         try {
             if (acc.accountAccess) {
                 System.out.println("\n Баланс аккаунта " + acc.getCountOfMoney() + "\n");
@@ -43,12 +43,14 @@ public class TerminalImpl implements Terminal {
         } else {
             System.err.println("\nНедостаточно денег на балансе\n");
         }
+
     }
 
-    public void terminalInterface() throws IOException {
+    public void terminalInterface() throws IOException, InterruptedException {
         System.out.println("\nВведите имя аккаунта\n");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         getAccount(reader.readLine());
+        countOfWrongPassEnters = 0;
 
 
         while (true) {
@@ -79,14 +81,27 @@ public class TerminalImpl implements Terminal {
                             int sum = Integer.parseInt(reader.readLine());
                             getTheMoney(accountNow, sum);
                         } catch (NumberFormatException e) {
-                            System.err.println("Введено не число");
+                            System.err.println("\nВведено не число\n");
                         }
                     case 4:
                         System.exit(0);
                 }
             } else {
-                System.err.println("Доступ к аккаунту запрещен");
-                break;
+                //System.err.println("Доступ к аккаунту запрещен");
+                countOfWrongPassEnters++;
+                if (countOfWrongPassEnters < 3) {
+                    System.err.println("\n Введен неверный пинкод, попробуйте еще раз");
+                    enterPinCode(accountNow);
+                } else {
+                    System.out.println("Превышено количество попыток ввода пин-кода. Ждите");
+                    for (int i = 0; i < 10; i++) {
+                        Thread.sleep(1000);
+                        System.out.println("Осталось " + (10 - i) + " секунд");
+                    }
+                    terminalInterface();
+
+                }
+
             }
         }
     }
@@ -114,28 +129,7 @@ public class TerminalImpl implements Terminal {
     }
 
     public void enterPinCode(Account acc) throws InterruptedException {
-        int numberOfTry = 0;
-
         checkPinCode(acc);
-
-//        while(true){
-//            checkPinCode(acc);
-//
-//            if (acc.accountAccess){
-//                numberOfTry = 0;
-//                break;
-//            } else{
-//                numberOfTry++;
-//                if (numberOfTry == 3){
-//                    numberOfTry = 0;
-//                    System.out.println("А НУ ДАВАЙ ЕЩЕ!");
-//                }
-//            }
-//        }
-
-
-
-
     }
 
     public void checkPinCode(Account acc) {
@@ -166,7 +160,8 @@ public class TerminalImpl implements Terminal {
                 acc.accountAccess = true;
 
             } else {
-                System.err.println(" Введен неверный пинкод");
+                //System.err.println(" Введен неверный пинкод");
+                bufferStr.setLength(0);
                 acc.accountAccess = false;
 
             }
