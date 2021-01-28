@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="HomeWorkSber" />
-      </profile>
-    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="12345" target="15" />
+      <module name="Friends" target="15" />
+      <module name="Homework4_SocialWeb" target="15" />
+      <module name="HW4_SocialWeb" target="15" />
+      <module name="NewModule" target="15" />
+      <module name="Photos" target="15" />
+      <module name="social-web" target="15" />
+      <module name="SocialWeb" target="15" />
+    </bytecodeTargetLevel>
   </component>
 </project>
