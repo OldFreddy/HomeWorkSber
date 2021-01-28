@@ -2,7 +2,7 @@ package HomeWork10_1_Multithreading;
 
 public class FactorialThread extends Thread {
 
-    Long num;
+    private Long num;
 
 
     public FactorialThread(Long num) {

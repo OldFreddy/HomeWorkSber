@@ -26,12 +26,4 @@ public class Main {
         }
         return newList;
     }
-
-    public static Long getFactorial(Long n) {
-        Long result = 1L;
-        for (int i = 1; i <= n; i++) {
-            result = result * i;
-        }
-        return result;
-    }
 }
